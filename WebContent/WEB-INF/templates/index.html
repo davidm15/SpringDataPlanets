@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:replace="~{includes/bootstrapMeta :: bootstrapMeta}" />
+<title>Planet Manager</title>
+<div th:replace="~{includes/bootstrapCSS :: bootstrapCSS}" />
+</head>
+<body>
+	<div class="container" role="main">
+
+
+
+		<!--  1 simple button ----------------------------------------------------------- -->
+		<div class="row">
+			<div class="col-md-10">
+				<h1>Spring Data JPA</h1>
+			</div>
+
+			<div class="col-md-2">
+				<a href="fillPlanetList">
+					<button type="button" class="btn btn-success">Fill List</button>
+				</a>
+			</div>
+		</div>
+		<hr>
+
+		<!--  search by Id ----------------------------------------------------------- -->
+		<div class="row">
+			<div class="col-md-12">
+				<form class="form-horizontal" action="findById" method="post">
+					<div class="form-group">
+						<label class="control-label col-md-2" for="id">Find by Id:</label>
+						<div class="col-md-5">
+					 		<input type="text" name="id">
+						</div>
+						<div class="col-md-5">
+					  		<input class="btn btn-default" type="submit" value="Do it">
+						</div>		
+					</div>		
+				</form>
+			</div>
+		</div>
+
+		<hr>
+
+		<!--  paging example ----------------------------------------------------------- -->
+		<div class="row">
+			<div class="col-md-12">
+				<form class="form-horizontal" action="getPage" method="post">
+					<div class="form-group">
+						<label class="control-label col-md-2" for="page">Page:</label>
+						<div class="col-md-5">
+					 		<input type="text" name="page">
+						</div>
+					</div>		
+					<div class="form-group">
+						<label class="control-label col-md-2" for="size">Size:</label>
+						<div class="col-md-5">
+					 		<input type="text" name="size">
+						</div>
+						<div class="col-md-5">
+					  		<input class="btn btn-default" type="submit" value="Do it">
+						</div>		
+					</div>		
+				</form>
+			</div>
+
+		</div>
+
+		<hr>
+
+
+		<!--  Search + Fill ----------------------------------------------------------- -->
+			<div class="row">
+				<div class="col-md-12">
+					<form class="form-horizontal" method="post" action="find">
+						<div class="form-group">
+							<label class="control-label col-md-2" for="searchType">Search:</label> 
+							<div class="col-md-5">
+								<select name="searchType">
+									<option value="query1" selected="selected">Show all planets</option>							
+									<option value="query2">Find planet by name containing ...</option>
+									<option value="query3">Find planet by name or surface</option>
+									<option value="query4">Find planet by name whatsoever</option>
+									<option value="query5">Find planet by size</option>
+									<option value="query6">delete planet by name</option>
+									<option value="query7">Find planet by name and order by size Asc</option>
+									<option value="query8">Find planet containing name or galaxy name</option>
+									<option value="query9">Find planet with size greater that 20000</option>
+									<option value="query10">Find planet by whatsoever name</option>
+									<option value="query10">Delete by galaxy name</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="searchString">SearchString:</label>
+						<div class="col-md-5">
+					 		<input type="text" name="searchString"> 
+						</div>
+						<div class="col-md-5">
+					  		<input class="btn btn-default" type="submit" value="Do it">
+						</div>		
+					</div>	
+				</form>
+			</div>
+			</div>
+			<hr>
+
+			<!--  Search + Fill ----------------------------------------------------------- -->
+			<h3>Count: <span th:text="${count}"></span></h3>
+			<hr>
+
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+
+				<table data-toggle="table" class="table table-striped">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Surface</th>
+							<th>Size</th>
+							<th>Galaxy</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--  list all items ----------------------------------------------------------- -->
+						<tr th:each="planet : ${planets}">
+							<td th:text="${planet.id}"></td>
+							<td th:text="${planet.name}"></td>
+							<td th:text="${planet.surface}"></td>
+							<td th:text="${planet.size}"></td>
+							<td th:text="${planet.galaxy.name}"></td>
+							<td><a th:href="@{/delete(id=${planet.id})}">Delete</a></td>
+							
+						</tr>
+						<!--  list all items ----------------------------------------------------------- -->
+					</tbody>
+				</table>
+								
+			</div>
+		</div>
+	</div>
+	<!--  End of container -->
+	<div th:replace="~{includes/bootstrapJS :: bootstrapJS}" />
+</body>
+</html>
